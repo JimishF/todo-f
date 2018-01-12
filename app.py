@@ -22,7 +22,7 @@ def root():
    return render_template('index.html',data={ "name":"Piyush" })
 
 @app.route("/api", methods = ['POST'])
-def apiGateway():
+def apiGateway(request):
 	opcode 	= request.form.get('opcode')
 	task 	= request.form.get('task')
 	return jsonify( { "lol" : "lol"} )
