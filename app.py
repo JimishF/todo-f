@@ -36,15 +36,18 @@ def apiGateway():
 			"time" : time.time(),
 			"status" : "OPEN"
 		}
-		print "INSERTING.."
+		print "INSERTING [START]"
 		obj_id = str(db.data.insert(task))
+		print "INSERTING [DONE]"
+		
 		return jsonify({ "obj_id" : obj_id })
 	elif opcode == "LIST":
-		print "LISTING.."
+		print "LISTING [START]"
+		resp_list = []
 		for x in db.data.find({"status": {"$ne": "CLOSED"} }):
 			x['_id'] = str(x['_id'])
-			resp_list.push( x ) 
-
+			resp_list.append( x ) 
+		print "LISTING [DONE]"
 		return jsonify (resp_list)
 if __name__ == "__main__":
     app.run(debug=True)
