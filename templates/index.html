@@ -98,15 +98,15 @@
                     self.task['task'] = self.taskInput;
                     console.log(self.task);
                     
-                    // axios.post(`/api`, {
-                    //         'opcode':'add',
-                    //         'task': task,
-                    //     }).then(response => {
-                    //         console.log('response');
+                    axios.post(`/api`, {
+                            'opcode':'add',
+                            'task': self.task,
+                        }).then(response => {
+                            console.log(response.data);
                             
-                    //     }).catch(e => {
-                    //         this.errors.push(e)
-                    //     });
+                        }).catch(e => {
+                            this.errors.push(e)
+                        });
 
                 }
             }
