@@ -25,6 +25,7 @@ def root():
 def apiGateway():
 	opcode 	= request.form.get('opcode')
 	task 	= request.form.get('task')
+	print opcode, taskg	
 	return jsonify( { "lol" : "lol"} )
 
 if __name__ == "__main__":
