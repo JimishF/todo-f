@@ -38,7 +38,7 @@
 
             <div class="row">
                 <div class="col-12 col-md-8 offset-md-2">
-                    <button type="submit" class="btn btn-outline-primary btn-rounded waves-effect">Add Task</button>
+                    <button type="submit" class="btn btn-outline-primary btn-rounded waves-effect" :disabled="inProcess">Add Task</button>
                 </div>
             </div>
         </form>
@@ -87,18 +87,30 @@
             data: {
                 titleInput: 'abc',
                 taskInput: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam doloremque inventore repellat labore ea a, repellendus delectus enim? Id, sint quae maxime earum reprehenderit dolor aliquid in accusamus eos totam!',
+                inProcess:false,
                 tasks: [],
+            },
+            created:function () {
+                var self = this;
+                
+                $.post('/api',{'opcode':'LIST'},function (response) {
+                        console.log(response);
+                        
+                    });
             },
             methods: {
 
                 onSubmit: function () {
                     var self = this;
+                    self.inProcess=true;
                     var task = {};
                     task['title'] = self.titleInput;
                     task['task'] = self.taskInput;
                     console.log(self.task);
                     $.post('/api',{'opcode':'ADD','data':task},function (response) {
                         console.log(response);
+                        self.inProcess=true;
+                        
                     });
                 }
 
