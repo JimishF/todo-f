@@ -1,5 +1,8 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
+import time
+import json
+from bson import ObjectId
 
 app = Flask(__name__)
 
@@ -23,11 +26,25 @@ def root():
 
 @app.route("/api", methods = ['POST'])
 def apiGateway():
-	# opcode 	= request.form.get('opcode')
-	# task 	= request.form.get('task')
-	# print opcode, task	
-	print request.form
-	return jsonify( { "lol" : "lol"} )
+	opcode 	= request.form.get('opcode')
+	print "> request for ", opcode
 
+	if opcode == "ADD":
+		task 	= {
+			"title": request.form.get("data[title]"),
+			"task": request.form.get("data[task]"),
+			"time" : time.time(),
+			"status" : "OPEN"
+		}
+		print "INSERTING.."
+		obj_id = str(db.data.insert(task))
+		return jsonify({ "obj_id" : obj_id })
+	elif opcode == "LIST":
+		print "LISTING.."
+		for x in db.data.find({"status": {"$ne": "CLOSED"} }):
+			x['_id'] = str(x['_id'])
+			resp_list.push( x ) 
+
+		return jsonify (resp_list)
 if __name__ == "__main__":
     app.run(debug=True)
