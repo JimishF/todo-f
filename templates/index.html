@@ -87,17 +87,17 @@
             data: {
                 titleInput: 'abc',
                 taskInput: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam doloremque inventore repellat labore ea a, repellendus delectus enim? Id, sint quae maxime earum reprehenderit dolor aliquid in accusamus eos totam!',
-                task: [],
                 tasks: [],
             },
             methods: {
 
                 onSubmit: function () {
                     var self = this;
-                    self.task['title'] = self.titleInput;
-                    self.task['task'] = self.taskInput;
+                    var task = {};
+                    task['title'] = self.titleInput;
+                    task['task'] = self.taskInput;
                     console.log(self.task);
-                    $.post('/api',{'opcode':'ADD','task':self.task},function (response) {
+                    $.post('/api',{'opcode':'ADD','data':task},function (response) {
                         console.log(response);
                     });
                 }
