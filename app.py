@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from pymongo import MongoClient
+
 app = Flask(__name__)
  
 jinja_options = Flask.jinja_options.copy()
