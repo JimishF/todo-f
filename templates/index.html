@@ -97,32 +97,12 @@
                     self.task['title'] = self.titleInput;
                     self.task['task'] = self.taskInput;
                     console.log(self.task);
-
-                    axios({
-                            method: 'post',
-                            url: '/api',
-                            data: {
-                                'opcode': 'add',
-                                'task': self.task,
-                            },
-                            config: {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }
-                        })
-                        .then(function (response) {
-                            //handle success
-                            console.log(response);
-                        })
-                        .catch(function (response) {
-                            //handle error
-                            console.log(response);
-                        });
+                    $.post('/api',{'opcode':'ADD','task':self.task},function (response) {
+                        console.log(response);
+                    });
                 }
 
             }
-        }
         })
     </script>
 </body>
