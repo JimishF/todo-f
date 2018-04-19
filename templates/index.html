@@ -108,7 +108,6 @@
                     task['title'] = self.titleInput;
                     task['task'] = self.taskInput;
                     console.log(self.task);
-                   
                     $.post('/api',{'opcode':'ADD','data':task},function (response) {
                         console.log(response);
                         task['_id'] = response['obj_id'];
