@@ -58,13 +58,15 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>Task</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                <tr v-for="t in tasks.  slice().reverse()">
+                                    <th scope="row">{{t._id}}</th>
+                                    <td>{{t.title}}</td>
+                                    <td>{{t.task}}</td>
+                                    <td>{{t.status}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -82,6 +84,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
     <script>
+
         var app = new Vue({
             el: '#app',
             data: {
@@ -92,11 +95,9 @@
             },
             created:function () {
                 var self = this;
-                
                 $.post('/api',{'opcode':'LIST'},function (response) {
-                        console.log(response);
-                        
-                    });
+                    self.tasks = response;
+                });
             },
             methods: {
 
@@ -110,8 +111,11 @@
                    
                     $.post('/api',{'opcode':'ADD','data':task},function (response) {
                         console.log(response);
+                        task['_id'] = response['obj_id'];
+                        task['status'] = "OPEN";
+                        self.tasks.push( task );
+
                         self.inProcess=true;
-                        
                     });
                 }
 
